@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grupo Orlando Neto Imóveis | João Pessoa, PB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="#">Área do Cliente</a>
+    <a href="#"> (83) 9986-7000</a>
+    <div class="search">
+      <input type="text" placeholder="Ex: comprar apto no Bessa">
+      <button type="button">🔍</button>
+    </div>
+  </div>
+</div>
+
+<header class="mainnav">
+  <div class="wrap">
+    <div class="logo">
+      <img class="logo-mark" src="20250805_105655.png" alt="Logo Grupo Orlando Neto">
+      <div class="logo-text">
+        <div class="l1">Grupo Orlando</div>
+        <div class="l2">Neto Imóveis</div>
+      </div>
+    </div>
+    <ul class="navlinks">
+      <li><a href="#alugar">ALUGAR <span class="car">▾</span></a></li>
+      <li><a href="#imoveis">IMÓVEIS <span class="car">▾</span></a></li>
+      <li><a href="#anunciar">ANUNCIE SEU IMÓVEL <span class="car">▾</span></a></li>
+      <li><a href="#avaliar">AVALIE SEU IMÓVEL <span class="car">▾</span></a></li>
+      <li><a href="#imobiliaria">IMOBILIÁRIA <span class="car">▾</span></a></li>
+    </ul>
+    <div class="burger" id="burger" role="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<script>
+(function(){
+  const burger = document.getElementById('burger');
+  const navlinks = document.querySelector('.navlinks');
+  burger.addEventListener('click', () => {
+    const isOpen = navlinks.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-expanded', String(isOpen));
+  });
+  navlinks.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') {
+      navlinks.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+</script>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Os Melhores Imóveis de João Pessoa | Compra, Venda e Aluguel com Segurança</h1>
+
+    <div class="pillrow">
+      <div class="pill">Busca de Imóveis</div>
+      <div class="pill">Busca por Cód./Ref.</div>
+      <div class="pill">Busca Edifício/Condomínio</div>
+      <div class="pill">Busca Próximo a Lugares</div>
+      <div class="pill count">612 imóveis disponíveis</div>
+    </div>
+
+    <div class="searchbox">
+      <div class="field"><select><option>Operação</option><option>Comprar</option><option>Alugar</option></select></div>
+      <div class="field"><select><option>Cidades</option><option>João Pessoa</option><option>Cabedelo</option></select></div>
+      <div class="field"><select><option>Tipos</option><option>Apartamento</option><option>Casa</option><option>Comercial</option></select></div>
+      <div class="field"><select><option>Bairros</option><option>Cabo Branco</option><option>Tambaú</option><option>Bessa</option></select></div>
+      <div class="row2">
+        <div class="field"><select><option>Finalidade</option><option>Residencial</option><option>Comercial</option></select></div>
+        <div class="field"><select><option>Dormitórios</option><option>1</option><option>2</option><option>3+</option></select></div>
+        <div class="field"><select><option>Garagem</option><option>1</option><option>2</option><option>3+</option></select></div>
+        <div class="field"><input type="text" placeholder="Valor Mín."></div>
+      </div>
+      <button class="searchbtn" type="button">Pesquisar Imóveis</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="imoveis">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Lançamentos em destaque</h2>
+      <p>Os melhores empreendimentos com condições especiais para você.</p>
+    </div>
+    <div class="grid3">
+      <div class="launch-card">
+        <div class="photo" style="background:linear-gradient(160deg,#BFD3C8,#5C8A72 60%,#2E5943)"><span class="tag">Lançamento</span></div>
+        <div class="foot">Edifício de Apartamento</div>
+        <div class="info">
+          <h3>VILLA MARINE</h3>
+          <div class="loc">Altiplano Cabo Branco — João Pessoa/PB</div>
+          <p>Um novo conceito residencial no coração do Altiplano, com área de lazer completa e vista para o mar.</p>
+        </div>
+      </div>
+      <div class="launch-card">
+        <div class="photo" style="background:linear-gradient(160deg,#D8CFB8,#A99259 60%,#6B5B33)"><span class="tag">Pré Lançamento</span></div>
+        <div class="foot">Edifício de Flats</div>
+        <div class="info">
+          <h3>THE PALM</h3>
+          <div class="loc">Tambaú — João Pessoa/PB</div>
+          <p>Flats compactos e funcionais a poucos passos da orla, pensados para quem busca praticidade.</p>
+        </div>
+      </div>
+      <div class="launch-card">
+        <div class="photo" style="background:linear-gradient(160deg,#C7D6CE,#71958A 60%,#3B584F)"><span class="tag">Lançamento</span></div>
+        <div class="foot">Edifício de Apartamento</div>
+        <div class="info">
+          <h3>OCEANIA RESIDENCE</h3>
+          <div class="loc">Jardim Oceania — João Pessoa/PB</div>
+          <p>Bem-estar e sofisticação em um dos bairros mais procurados da cidade, com plantas de 2 e 3 quartos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--paper)" id="alugar">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Imóveis para alugar em destaque</h2>
+      <p>Opções selecionadas para morar ou investir em locação.</p>
+    </div>
+    <div class="grid3">
+      <div class="listing-card">
+        <div class="photo" style="background:linear-gradient(160deg,#DCE1D6,#93A98F 60%,#5E7457)">
+          <span class="code">Cód. 118</span>
+          <span class="icons"><span>♡</span></span>
+        </div>
+        <div class="price-bar">Alugar R$ 2.700,00</div>
+        <div class="info">
+          <h3>Apartamento Mobiliado</h3>
+          <div class="loc">📍 Bessa — João Pessoa/PB</div>
+          <p>Excelente apartamento próximo à orla do Bessa, mobiliado e pronto para morar.</p>
+          <div class="specs">
+            <div><b>1</b>Dorm.</div><div><b>1</b>Banho</div><div><b>1</b>Garagem</div><div><b>45m²</b>Const.</div>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="photo" style="background:linear-gradient(160deg,#E4DCC9,#B8A272 60%,#7A6538)">
+          <span class="code">Cód. 204</span>
+          <span class="icons"><span>♡</span></span>
+        </div>
+        <div class="price-bar"><span class="old">R$ 3.500,00</span>Alugar R$ 3.200,00</div>
+        <div class="info">
+          <h3>Casa em Condomínio</h3>
+          <div class="loc">📍 Altiplano — João Pessoa/PB</div>
+          <p>Casa ampla em condomínio fechado, com área de lazer e segurança 24h.</p>
+          <div class="specs">
+            <div><b>3</b>Dorm.</div><div><b>2</b>Banho</div><div><b>2</b>Garagem</div><div><b>140m²</b>Const.</div>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="photo" style="background:linear-gradient(160deg,#D8E0DC,#7FA79B 60%,#3F675C)">
+          <span class="code">Cód. 331</span>
+          <span class="icons"><span>♡</span></span>
+        </div>
+        <div class="price-bar">Alugar R$ 9.000,00</div>
+        <div class="info">
+          <h3>Sala Comercial</h3>
+          <div class="loc">📍 Tambauzinho — João Pessoa/PB</div>
+          <p>Excelente sala comercial, bem localizada, ideal para clínicas e escritórios.</p>
+          <div class="specs">
+            <div><b>7</b>Salas</div><div><b>2</b>Banho</div><div><b>360m²</b>Terreno</div><div><b>360m²</b>Const.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="anunciar">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Imóveis para venda em destaque</h2>
+      <p>As maiores oportunidades para comprar o seu imóvel. Para morar ou investir!</p>
+    </div>
+    <div class="grid3">
+      <div class="listing-card">
+        <div class="photo" style="background:linear-gradient(160deg,#DFE7E2,#9CC0B3 60%,#4C7A6E)">
+          <span class="code">Cód. 4471</span>
+          <span class="icons"><span>♡</span></span>
+        </div>
+        <div class="price-bar">Comprar R$ 620.000,00</div>
+        <div class="info">
+          <h3>Apartamento Vista Mar</h3>
+          <div class="loc">📍 Cabo Branco — João Pessoa/PB</div>
+          <p>Amplo apartamento com vista para o mar, 3 quartos sendo 1 suíte, totalmente reformado.</p>
+          <div class="specs">
+            <div><b>3</b>Dorm.</div><div><b>1</b>Suíte</div><div><b>2</b>Garagem</div><div><b>98m²</b>Const.</div>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="photo" style="background:linear-gradient(160deg,#EDE6D6,#C9B98F 60%,#8F7A4B)">
+          <span class="code">Cód. 5089</span>
+          <span class="icons"><span>♡</span></span>
+        </div>
+        <div class="price-bar"><span class="old">R$ 450.000,00</span>Comprar R$ 415.000,00</div>
+        <div class="info">
+          <h3>Apartamento Compacto</h3>
+          <div class="loc">📍 Manaíra — João Pessoa/PB</div>
+          <p>Ótimo custo-benefício, próximo ao comércio e a poucos minutos da praia de Manaíra.</p>
+          <div class="specs">
+            <div><b>2</b>Dorm.</div><div><b>1</b>Banho</div><div><b>1</b>Garagem</div><div><b>68m²</b>Const.</div>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="photo" style="background:linear-gradient(160deg,#E6DCCE,#B99C6B 60%,#7A5B2E)">
+          <span class="code">Cód. 3897</span>
+          <span class="icons"><span>♡</span></span>
+        </div>
+        <div class="price-bar">Comprar R$ 1.350.000,00</div>
+        <div class="info">
+          <h3>Casa Alto Padrão</h3>
+          <div class="loc">📍 Altiplano Cabo Branco — João Pessoa/PB</div>
+          <p>Casa de alto padrão em condomínio, 4 suítes, piscina e área gourmet completa.</p>
+          <div class="specs">
+            <div><b>4</b>Suítes</div><div><b>5</b>Banho</div><div><b>4</b>Garagem</div><div><b>320m²</b>Const.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="imobiliaria">
+  <div class="wrap">
+    <div class="stat"><b>22 anos</b><span>de mercado</span></div>
+    <div class="stat"><b>612</b><span>imóveis disponíveis</span></div>
+    <div class="stat"><b>1.400+</b><span>negócios fechados</span></div>
+    <div class="stat"><b>14</b><span>corretores especialistas</span></div>
+  </div>
+</section>
+
+<section class="contact" id="avaliar">
+  <div class="wrap">
+    <div>
+      <h2>Avalie ou anuncie seu imóvel com a gente</h2>
+      <p class="lead">Preencha o formulário com os dados do imóvel ou fale direto com um dos nossos corretores. Retornamos em horário comercial.</p>
+      <div class="info">
+        <span>📍 Av. Epitácio Pessoa, João Pessoa — PB</span>
+        <span>📞 (83) 3021-4545</span>
+        <span>💬 (83) 99000-4545 — WhatsApp</span>
+        <span>✉️ contato@grupoorlandoneto.com.br</span>
+      </div>
+    </div>
+    <form onsubmit="event.preventDefault(); this.reset(); alert('Mensagem enviada. Em breve entraremos em contato.');">
+      <input type="text" placeholder="Nome" required>
+      <input type="tel" placeholder="Telefone / WhatsApp" required>
+      <input type="text" placeholder="Bairro do imóvel">
+      <textarea rows="4" placeholder="Conte um pouco sobre o imóvel"></textarea>
+      <button type="submit">Enviar mensagem</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Grupo Orlando Neto Imóveis — CRECI-PB</span>
+    <span>João Pessoa, Paraíba</span>
+  </div>
+</footer>
+
+<button id="ai-toggle" aria-label="Abrir assistente virtual">💬</button>
+<div id="ai-panel">
+  <div id="ai-head">
+    <div>
+      <strong>Assistente Grupo Orlando Neto</strong>
+      <span>Me conte o que você procura</span>
+    </div>
+    <button id="ai-close" aria-label="Fechar">✕</button>
+  </div>
+  <div id="ai-body"></div>
+  <form id="ai-form">
+    <input id="ai-input" type="text" placeholder="Ex: apê de 2 quartos no Bessa" autocomplete="off">
+    <button id="ai-send" type="submit">➤</button>
+  </form>
+</div>
+
+<script>
+(function(){
+  // Endereço do SEU backend (veja server.js). Nunca coloque a chave da API aqui no front-end.
+  const CHAT_API_URL = '/api/chat';
+
+  const toggleBtn = document.getElementById('ai-toggle');
+  const panel = document.getElementById('ai-panel');
+  const closeBtn = document.getElementById('ai-close');
+  const body = document.getElementById('ai-body');
+  const form = document.getElementById('ai-form');
+  const input = document.getElementById('ai-input');
+  const sendBtn = document.getElementById('ai-send');
+
+  let previousInteractionId = null;
+  let busy = false;
+  let started = false;
+
+  function addMsg(text, cls){
+    const d = document.createElement('div');
+    d.className = 'ai-msg ' + cls;
+    d.textContent = text;
+    body.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+    return d;
+  }
+
+  function init(){
+    if (started) return;
+    started = true;
+    addMsg('Olá! Sou a assistente virtual do Grupo Orlando Neto. Me conte o que você procura: bairro, tipo de imóvel, comprar ou alugar.', 'bot');
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open')) init();
+  });
+  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (busy) return;
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    addMsg(text, 'user');
+
+    busy = true; sendBtn.disabled = true;
+    const botEl = addMsg('Pensando...', 'bot');
+
+    try {
+      const res = await fetch(CHAT_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, previousInteractionId })
+      });
+      if (!res.ok) throw new Error('http_' + res.status);
+      const data = await res.json();
+      botEl.textContent = data.text || 'Não consegui gerar uma resposta agora.';
+      previousInteractionId = data.interactionId || previousInteractionId;
+    } catch (err) {
+      botEl.textContent = 'Não consegui falar com o assistente agora. Tente novamente em instantes ou fale com um corretor pelo WhatsApp.';
+    } finally {
+      busy = false; sendBtn.disabled = false;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

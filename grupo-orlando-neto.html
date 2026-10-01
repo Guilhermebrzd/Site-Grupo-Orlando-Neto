@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Grupo Orlando Neto Imóveis | João Pessoa, PB</title>
+<link rel="icon" type="image/png" href="/20250805_105655.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -95,34 +96,8 @@
       <h2>Lançamentos em destaque</h2>
       <p>Os melhores empreendimentos com condições especiais para você.</p>
     </div>
-    <div class="grid3">
-      <div class="launch-card">
-        <div class="photo" style="background:linear-gradient(160deg,#BFD3C8,#5C8A72 60%,#2E5943)"><span class="tag">Lançamento</span></div>
-        <div class="foot">Edifício de Apartamento</div>
-        <div class="info">
-          <h3>VILLA MARINE</h3>
-          <div class="loc">Altiplano Cabo Branco — João Pessoa/PB</div>
-          <p>Um novo conceito residencial no coração do Altiplano, com área de lazer completa e vista para o mar.</p>
-        </div>
-      </div>
-      <div class="launch-card">
-        <div class="photo" style="background:linear-gradient(160deg,#D8CFB8,#A99259 60%,#6B5B33)"><span class="tag">Pré Lançamento</span></div>
-        <div class="foot">Edifício de Flats</div>
-        <div class="info">
-          <h3>THE PALM</h3>
-          <div class="loc">Tambaú — João Pessoa/PB</div>
-          <p>Flats compactos e funcionais a poucos passos da orla, pensados para quem busca praticidade.</p>
-        </div>
-      </div>
-      <div class="launch-card">
-        <div class="photo" style="background:linear-gradient(160deg,#C7D6CE,#71958A 60%,#3B584F)"><span class="tag">Lançamento</span></div>
-        <div class="foot">Edifício de Apartamento</div>
-        <div class="info">
-          <h3>OCEANIA RESIDENCE</h3>
-          <div class="loc">Jardim Oceania — João Pessoa/PB</div>
-          <p>Bem-estar e sofisticação em um dos bairros mais procurados da cidade, com plantas de 2 e 3 quartos.</p>
-        </div>
-      </div>
+    <div class="grid3" id="grid-lancamento">
+      <p style="color:var(--muted);grid-column:1/-1;text-align:center">Carregando...</p>
     </div>
   </div>
 </section>
@@ -133,52 +108,8 @@
       <h2>Imóveis para alugar em destaque</h2>
       <p>Opções selecionadas para morar ou investir em locação.</p>
     </div>
-    <div class="grid3">
-      <div class="listing-card">
-        <div class="photo" style="background:linear-gradient(160deg,#DCE1D6,#93A98F 60%,#5E7457)">
-          <span class="code">Cód. 118</span>
-          <span class="icons"><span>♡</span></span>
-        </div>
-        <div class="price-bar">Alugar R$ 2.700,00</div>
-        <div class="info">
-          <h3>Apartamento Mobiliado</h3>
-          <div class="loc">📍 Bessa — João Pessoa/PB</div>
-          <p>Excelente apartamento próximo à orla do Bessa, mobiliado e pronto para morar.</p>
-          <div class="specs">
-            <div><b>1</b>Dorm.</div><div><b>1</b>Banho</div><div><b>1</b>Garagem</div><div><b>45m²</b>Const.</div>
-          </div>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="photo" style="background:linear-gradient(160deg,#E4DCC9,#B8A272 60%,#7A6538)">
-          <span class="code">Cód. 204</span>
-          <span class="icons"><span>♡</span></span>
-        </div>
-        <div class="price-bar"><span class="old">R$ 3.500,00</span>Alugar R$ 3.200,00</div>
-        <div class="info">
-          <h3>Casa em Condomínio</h3>
-          <div class="loc">📍 Altiplano — João Pessoa/PB</div>
-          <p>Casa ampla em condomínio fechado, com área de lazer e segurança 24h.</p>
-          <div class="specs">
-            <div><b>3</b>Dorm.</div><div><b>2</b>Banho</div><div><b>2</b>Garagem</div><div><b>140m²</b>Const.</div>
-          </div>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="photo" style="background:linear-gradient(160deg,#D8E0DC,#7FA79B 60%,#3F675C)">
-          <span class="code">Cód. 331</span>
-          <span class="icons"><span>♡</span></span>
-        </div>
-        <div class="price-bar">Alugar R$ 9.000,00</div>
-        <div class="info">
-          <h3>Sala Comercial</h3>
-          <div class="loc">📍 Tambauzinho — João Pessoa/PB</div>
-          <p>Excelente sala comercial, bem localizada, ideal para clínicas e escritórios.</p>
-          <div class="specs">
-            <div><b>7</b>Salas</div><div><b>2</b>Banho</div><div><b>360m²</b>Terreno</div><div><b>360m²</b>Const.</div>
-          </div>
-        </div>
-      </div>
+    <div class="grid3" id="grid-aluguel">
+      <p style="color:var(--muted);grid-column:1/-1;text-align:center">Carregando...</p>
     </div>
   </div>
 </section>
@@ -189,55 +120,82 @@
       <h2>Imóveis para venda em destaque</h2>
       <p>As maiores oportunidades para comprar o seu imóvel. Para morar ou investir!</p>
     </div>
-    <div class="grid3">
-      <div class="listing-card">
-        <div class="photo" style="background:linear-gradient(160deg,#DFE7E2,#9CC0B3 60%,#4C7A6E)">
-          <span class="code">Cód. 4471</span>
-          <span class="icons"><span>♡</span></span>
-        </div>
-        <div class="price-bar">Comprar R$ 620.000,00</div>
-        <div class="info">
-          <h3>Apartamento Vista Mar</h3>
-          <div class="loc">📍 Cabo Branco — João Pessoa/PB</div>
-          <p>Amplo apartamento com vista para o mar, 3 quartos sendo 1 suíte, totalmente reformado.</p>
-          <div class="specs">
-            <div><b>3</b>Dorm.</div><div><b>1</b>Suíte</div><div><b>2</b>Garagem</div><div><b>98m²</b>Const.</div>
-          </div>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="photo" style="background:linear-gradient(160deg,#EDE6D6,#C9B98F 60%,#8F7A4B)">
-          <span class="code">Cód. 5089</span>
-          <span class="icons"><span>♡</span></span>
-        </div>
-        <div class="price-bar"><span class="old">R$ 450.000,00</span>Comprar R$ 415.000,00</div>
-        <div class="info">
-          <h3>Apartamento Compacto</h3>
-          <div class="loc">📍 Manaíra — João Pessoa/PB</div>
-          <p>Ótimo custo-benefício, próximo ao comércio e a poucos minutos da praia de Manaíra.</p>
-          <div class="specs">
-            <div><b>2</b>Dorm.</div><div><b>1</b>Banho</div><div><b>1</b>Garagem</div><div><b>68m²</b>Const.</div>
-          </div>
-        </div>
-      </div>
-      <div class="listing-card">
-        <div class="photo" style="background:linear-gradient(160deg,#E6DCCE,#B99C6B 60%,#7A5B2E)">
-          <span class="code">Cód. 3897</span>
-          <span class="icons"><span>♡</span></span>
-        </div>
-        <div class="price-bar">Comprar R$ 1.350.000,00</div>
-        <div class="info">
-          <h3>Casa Alto Padrão</h3>
-          <div class="loc">📍 Altiplano Cabo Branco — João Pessoa/PB</div>
-          <p>Casa de alto padrão em condomínio, 4 suítes, piscina e área gourmet completa.</p>
-          <div class="specs">
-            <div><b>4</b>Suítes</div><div><b>5</b>Banho</div><div><b>4</b>Garagem</div><div><b>320m²</b>Const.</div>
-          </div>
-        </div>
-      </div>
+    <div class="grid3" id="grid-venda">
+      <p style="color:var(--muted);grid-column:1/-1;text-align:center">Carregando...</p>
     </div>
   </div>
 </section>
+
+<script>
+(function(){
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function money(v){ return (v===null||v===undefined||v==='') ? '' : Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+
+  function renderLaunchCard(item){
+    const photo = item.photo_url
+      ? `background-image:url('${esc(item.photo_url)}');background-size:cover;background-position:center`
+      : `background:linear-gradient(160deg,#C7D6CE,#71958A 60%,#3B584F)`;
+    return `
+      <div class="launch-card">
+        <div class="photo" style="${photo}"><span class="tag">${esc(item.badge || 'Lançamento')}</span></div>
+        <div class="foot">${esc(item.building_type || '')}</div>
+        <div class="info">
+          <h3>${esc(item.title)}</h3>
+          <div class="loc">${esc(item.location)}</div>
+          <p>${esc(item.description || '')}</p>
+        </div>
+      </div>`;
+  }
+
+  function renderListingCard(item){
+    const photo = item.photo_url
+      ? `background-image:url('${esc(item.photo_url)}');background-size:cover;background-position:center`
+      : `background:linear-gradient(160deg,#DCE1D6,#93A98F 60%,#5E7457)`;
+    const code = 'Cód. ' + (item.id || '').slice(0, 4).toUpperCase();
+    const priceLine = item.old_price
+      ? `<span class="old">${money(item.old_price)}</span>${esc(item.operation || '')} ${money(item.price)}`
+      : `${esc(item.operation || '')} ${money(item.price)}`;
+    const specs = Array.isArray(item.specs) ? item.specs : [];
+    const specsHtml = specs.map(s => `<div><b>${esc(s.value)}</b>${esc(s.label)}</div>`).join('');
+    return `
+      <div class="listing-card">
+        <div class="photo" style="${photo}">
+          <span class="code">${code}</span>
+          <span class="icons"><span>♡</span></span>
+        </div>
+        <div class="price-bar">${priceLine}</div>
+        <div class="info">
+          <h3>${esc(item.title)}</h3>
+          <div class="loc">📍 ${esc(item.location)}</div>
+          <p>${esc(item.description || '')}</p>
+          ${specs.length ? `<div class="specs">${specsHtml}</div>` : ''}
+        </div>
+      </div>`;
+  }
+
+  function renderGroup(containerId, items, renderFn){
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = items.length
+      ? items.map(renderFn).join('')
+      : '<p style="color:var(--muted);grid-column:1/-1;text-align:center">Nenhum imóvel cadastrado nesta categoria no momento.</p>';
+  }
+
+  async function loadListings(){
+    try {
+      const res = await fetch('/api/listings');
+      const items = await res.json();
+      renderGroup('grid-lancamento', items.filter(i => i.category === 'lancamento'), renderLaunchCard);
+      renderGroup('grid-aluguel', items.filter(i => i.category === 'aluguel'), renderListingCard);
+      renderGroup('grid-venda', items.filter(i => i.category === 'venda'), renderListingCard);
+    } catch (err) {
+      console.error('Erro ao carregar imóveis:', err);
+    }
+  }
+
+  loadListings();
+})();
+</script>
 
 <section class="about" id="imobiliaria">
   <div class="wrap">
@@ -260,15 +218,42 @@
         <span>✉️ contato@grupoorlandoneto.com.br</span>
       </div>
     </div>
-    <form onsubmit="event.preventDefault(); this.reset(); alert('Mensagem enviada. Em breve entraremos em contato.');">
-      <input type="text" placeholder="Nome" required>
-      <input type="tel" placeholder="Telefone / WhatsApp" required>
-      <input type="text" placeholder="Bairro do imóvel">
-      <textarea rows="4" placeholder="Conte um pouco sobre o imóvel"></textarea>
+    <form id="lead-form">
+      <input id="lead-name" type="text" placeholder="Nome" required>
+      <input id="lead-phone" type="tel" placeholder="Telefone / WhatsApp" required>
+      <input id="lead-neighborhood" type="text" placeholder="Bairro do imóvel">
+      <textarea id="lead-message" rows="4" placeholder="Conte um pouco sobre o imóvel"></textarea>
       <button type="submit">Enviar mensagem</button>
     </form>
   </div>
 </section>
+
+<script>
+(function(){
+  const form = document.getElementById('lead-form');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById('lead-name').value.trim(),
+      phone: document.getElementById('lead-phone').value.trim(),
+      neighborhood: document.getElementById('lead-neighborhood').value.trim(),
+      message: document.getElementById('lead-message').value.trim()
+    };
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('http_' + res.status);
+      form.reset();
+      alert('Mensagem enviada! Em breve entraremos em contato.');
+    } catch (err) {
+      alert('Não consegui enviar agora. Tente novamente ou fale pelo WhatsApp.');
+    }
+  });
+})();
+</script>
 
 <footer>
   <div class="wrap">

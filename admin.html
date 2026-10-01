@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administração — Grupo Orlando Neto</title>
+<link rel="icon" type="image/png" href="/20250805_105655.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green-dark:#0B3A2C;--green-mid:#146B4E;--gold:#C7A768;--bg:#F2F3F1;--line:#E3E6E2;--ink:#1D231F;--muted:#5B655E}
+  *{box-sizing:border-box}
+  body{font-family:'Inter',Arial,sans-serif;background:var(--bg);color:var(--ink);margin:0;padding:24px 20px 60px;max-width:1100px}
+  h1{color:var(--green-dark);font-size:1.4rem;display:flex;align-items:center;gap:10px}
+  h1 img{width:32px;height:32px}
+  h2{color:var(--green-dark);font-size:1.05rem;margin:0 0 14px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:6px;padding:18px;margin-bottom:24px;overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:0.85rem;min-width:600px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:0.74rem;text-transform:uppercase}
+  button{cursor:pointer;border:none;border-radius:4px;padding:7px 12px;font-weight:600;font-size:0.8rem}
+  .btn-primary{background:var(--green-dark);color:#fff}
+  .btn-danger{background:#B5482A;color:#fff}
+  .btn-ghost{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+  form.item-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
+  form.item-form .full{grid-column:1/-1}
+  form.item-form label{font-size:0.76rem;color:var(--muted);display:block;margin-bottom:3px}
+  form.item-form input,form.item-form select,form.item-form textarea{
+    width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:4px;font-family:inherit;font-size:0.88rem;
+  }
+  .specs-row{display:flex;gap:8px;margin-bottom:6px}
+  .specs-row input{flex:1}
+  .empty{color:var(--muted);text-align:center;padding:20px}
+  .actions-row{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+</style>
+</head>
+<body>
+
+<h1><img src="/20250805_105655.png" alt=""> Painel do Grupo Orlando Neto</h1>
+<p style="color:var(--muted);margin-top:-6px">Cadastre imóveis e acompanhe os contatos recebidos pelo site.</p>
+
+<div class="panel">
+  <h2 id="form-title">Novo imóvel / lançamento</h2>
+  <form class="item-form" id="item-form">
+    <div>
+      <label>Categoria</label>
+      <select id="f-category" required>
+        <option value="lancamento">Lançamento</option>
+        <option value="aluguel">Aluguel</option>
+        <option value="venda">Venda</option>
+      </select>
+    </div>
+    <div>
+      <label>Operação (aluguel/venda)</label>
+      <select id="f-operation">
+        <option value="Alugar">Alugar</option>
+        <option value="Comprar">Comprar</option>
+      </select>
+    </div>
+    <div>
+      <label>Título</label>
+      <input id="f-title" placeholder="Ex: Apartamento Vista Mar" required>
+    </div>
+    <div>
+      <label>Localização</label>
+      <input id="f-location" placeholder="Ex: Cabo Branco — João Pessoa/PB" required>
+    </div>
+    <div>
+      <label>Selo (lançamentos)</label>
+      <input id="f-badge" placeholder="Ex: Lançamento, Pré Lançamento">
+    </div>
+    <div>
+      <label>Tipo de edifício (lançamentos)</label>
+      <input id="f-building-type" placeholder="Ex: Edifício de Apartamento">
+    </div>
+    <div>
+      <label>Preço (R$)</label>
+      <input id="f-price" type="number" step="0.01" placeholder="Ex: 620000">
+    </div>
+    <div>
+      <label>Preço antigo (opcional, aparece riscado)</label>
+      <input id="f-old-price" type="number" step="0.01" placeholder="Ex: 450000">
+    </div>
+    <div class="full">
+      <label>URL de uma foto (opcional — sem foto, usa uma cor no lugar)</label>
+      <input id="f-photo" placeholder="https://...">
+    </div>
+    <div class="full">
+      <label>Descrição curta</label>
+      <textarea id="f-description" rows="2"></textarea>
+    </div>
+    <div class="full">
+      <label>Características (aluguel/venda) — ex: valor "3", rótulo "Dorm."</label>
+      <div id="specs-rows"></div>
+      <button type="button" class="btn-ghost" id="add-spec">+ Adicionar característica</button>
+    </div>
+    <div class="full actions-row">
+      <button type="button" class="btn-ghost" id="cancel-edit" style="display:none">Cancelar edição</button>
+      <button type="submit" class="btn-primary" id="submit-btn">Adicionar imóvel</button>
+    </div>
+  </form>
+</div>
+
+<div class="panel">
+  <h2>Imóveis cadastrados</h2>
+  <table id="listings-table">
+    <thead><tr><th>Categoria</th><th>Título</th><th>Local</th><th>Preço</th><th></th></tr></thead>
+    <tbody><tr><td colspan="5" class="empty">Carregando...</td></tr></tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h2>Contatos recebidos pelo site</h2>
+  <table id="leads-table">
+    <thead><tr><th>Data</th><th>Nome</th><th>Telefone</th><th>Bairro</th><th>Mensagem</th><th>Status</th></tr></thead>
+    <tbody><tr><td colspan="6" class="empty">Carregando...</td></tr></tbody>
+  </table>
+</div>
+
+<script>
+let currentListings = [];
+let editingId = null;
+
+function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function money(v){ return (v===null||v===undefined||v==='') ? '—' : Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+
+function addSpecRow(value='', label=''){
+  const row = document.createElement('div');
+  row.className = 'specs-row';
+  row.innerHTML = `<input class="spec-value" placeholder="Valor (ex: 3)" value="${esc(value)}">
+                    <input class="spec-label" placeholder="Rótulo (ex: Dorm.)" value="${esc(label)}">
+                    <button type="button" class="btn-ghost remove-spec">✕</button>`;
+  row.querySelector('.remove-spec').addEventListener('click', () => row.remove());
+  document.getElementById('specs-rows').appendChild(row);
+}
+document.getElementById('add-spec').addEventListener('click', () => addSpecRow());
+
+async function loadListings(){
+  const res = await fetch('/api/listings');
+  currentListings = await res.json();
+  const tbody = document.querySelector('#listings-table tbody');
+  tbody.innerHTML = currentListings.length ? currentListings.map(i => `
+    <tr data-id="${i.id}">
+      <td>${esc(i.category)}</td>
+      <td>${esc(i.title)}</td>
+      <td>${esc(i.location)}</td>
+      <td>${money(i.price)}</td>
+      <td style="white-space:nowrap">
+        <button class="btn-ghost edit-btn">Editar</button>
+        <button class="btn-danger delete-btn">Excluir</button>
+      </td>
+    </tr>`).join('') : '<tr><td colspan="5" class="empty">Nenhum imóvel cadastrado ainda.</td></tr>';
+}
+
+document.querySelector('#listings-table tbody').addEventListener('click', (e) => {
+  const tr = e.target.closest('tr');
+  if (!tr || !tr.dataset.id) return;
+  const item = currentListings.find(i => i.id === tr.dataset.id);
+  if (!item) return;
+  if (e.target.classList.contains('edit-btn')) editItem(item);
+  if (e.target.classList.contains('delete-btn')) deleteItem(item.id);
+});
+
+function editItem(item){
+  editingId = item.id;
+  document.getElementById('form-title').textContent = 'Editando imóvel';
+  document.getElementById('f-category').value = item.category;
+  document.getElementById('f-operation').value = item.operation || 'Alugar';
+  document.getElementById('f-title').value = item.title || '';
+  document.getElementById('f-location').value = item.location || '';
+  document.getElementById('f-badge').value = item.badge || '';
+  document.getElementById('f-building-type').value = item.building_type || '';
+  document.getElementById('f-price').value = item.price ?? '';
+  document.getElementById('f-old-price').value = item.old_price ?? '';
+  document.getElementById('f-photo').value = item.photo_url || '';
+  document.getElementById('f-description').value = item.description || '';
+  document.getElementById('specs-rows').innerHTML = '';
+  (item.specs || []).forEach(s => addSpecRow(s.value, s.label));
+  document.getElementById('submit-btn').textContent = 'Salvar alterações';
+  document.getElementById('cancel-edit').style.display = 'inline-block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('cancel-edit').addEventListener('click', resetForm);
+
+function resetForm(){
+  editingId = null;
+  document.getElementById('form-title').textContent = 'Novo imóvel / lançamento';
+  document.getElementById('item-form').reset();
+  document.getElementById('specs-rows').innerHTML = '';
+  document.getElementById('submit-btn').textContent = 'Adicionar imóvel';
+  document.getElementById('cancel-edit').style.display = 'none';
+}
+
+document.getElementById('item-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const specs = [...document.querySelectorAll('#specs-rows .specs-row')].map(row => ({
+    value: row.querySelector('.spec-value').value.trim(),
+    label: row.querySelector('.spec-label').value.trim()
+  })).filter(s => s.label && s.value);
+
+  const priceVal = document.getElementById('f-price').value;
+  const oldPriceVal = document.getElementById('f-old-price').value;
+
+  const payload = {
+    category: document.getElementById('f-category').value,
+    operation: document.getElementById('f-operation').value,
+    title: document.getElementById('f-title').value.trim(),
+    location: document.getElementById('f-location').value.trim(),
+    badge: document.getElementById('f-badge').value.trim() || null,
+    building_type: document.getElementById('f-building-type').value.trim() || null,
+    price: priceVal ? Number(priceVal) : null,
+    old_price: oldPriceVal ? Number(oldPriceVal) : null,
+    photo_url: document.getElementById('f-photo').value.trim() || null,
+    description: document.getElementById('f-description').value.trim() || null,
+    specs
+  };
+
+  const url = editingId ? `/api/admin/listings/${editingId}` : '/api/admin/listings';
+  const method = editingId ? 'PUT' : 'POST';
+  const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  if (!res.ok) { alert('Erro ao salvar. Confira os campos obrigatórios.'); return; }
+  resetForm();
+  loadListings();
+});
+
+async function deleteItem(id){
+  if (!confirm('Excluir este imóvel?')) return;
+  await fetch(`/api/admin/listings/${id}`, { method: 'DELETE' });
+  loadListings();
+}
+
+let currentLeads = [];
+
+async function loadLeads(){
+  const res = await fetch('/api/admin/leads');
+  currentLeads = await res.json();
+  const tbody = document.querySelector('#leads-table tbody');
+  tbody.innerHTML = currentLeads.length ? currentLeads.map(l => `
+    <tr data-id="${l.id}">
+      <td style="white-space:nowrap">${new Date(l.created_at).toLocaleString('pt-BR')}</td>
+      <td>${esc(l.name)}</td>
+      <td>${esc(l.phone)}</td>
+      <td>${esc(l.neighborhood||'')}</td>
+      <td>${esc(l.message||'')}</td>
+      <td><button class="toggle-contacted ${l.contacted ? 'btn-ghost' : 'btn-primary'}">
+        ${l.contacted ? 'Contatado ✓' : 'Marcar como contatado'}
+      </button></td>
+    </tr>`).join('') : '<tr><td colspan="6" class="empty">Nenhum contato recebido ainda.</td></tr>';
+}
+
+document.querySelector('#leads-table tbody').addEventListener('click', async (e) => {
+  if (!e.target.classList.contains('toggle-contacted')) return;
+  const tr = e.target.closest('tr');
+  const lead = currentLeads.find(l => l.id === tr.dataset.id);
+  if (!lead) return;
+  await fetch(`/api/admin/leads/${lead.id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contacted: !lead.contacted })
+  });
+  loadLeads();
+});
+
+loadListings();
+loadLeads();
+</script>
+</body>
+</html>

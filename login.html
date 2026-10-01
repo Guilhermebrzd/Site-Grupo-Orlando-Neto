@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login — Administração Grupo Orlando Neto</title>
+<link rel="icon" type="image/png" href="/20250805_105655.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green-dark:#0B3A2C;--gold:#C7A768;--line:#E3E6E2;--ink:#1D231F;--muted:#5B655E}
+  *{box-sizing:border-box}
+  body{
+    font-family:'Inter',Arial,sans-serif;background:var(--green-dark);color:var(--ink);margin:0;
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+  }
+  .card{background:#fff;border-radius:8px;padding:34px 30px;width:100%;max-width:360px;box-shadow:0 20px 50px rgba(0,0,0,0.3)}
+  .card img{width:54px;height:54px;display:block;margin:0 auto 14px}
+  h1{font-size:1.1rem;text-align:center;color:var(--green-dark);margin:0 0 4px}
+  p.sub{text-align:center;color:var(--muted);font-size:0.85rem;margin:0 0 22px}
+  label{font-size:0.8rem;color:var(--muted);display:block;margin-bottom:4px}
+  input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:4px;font-family:inherit;font-size:0.92rem;margin-bottom:14px}
+  input:focus{outline:2px solid var(--gold)}
+  button{width:100%;background:var(--green-dark);color:#fff;border:none;padding:12px;border-radius:4px;font-weight:700;font-size:0.92rem;cursor:pointer}
+  button:hover{background:#0F4C39}
+  .error{color:#B5482A;font-size:0.84rem;text-align:center;margin-bottom:12px;display:none}
+</style>
+</head>
+<body>
+  <form class="card" id="login-form">
+    <img src="/20250805_105655.png" alt="">
+    <h1>Área de Administração</h1>
+    <p class="sub">Grupo Orlando Neto Imóveis</p>
+    <div class="error" id="login-error">Usuário ou senha inválidos.</div>
+    <label for="username">Usuário</label>
+    <input id="username" type="text" autocomplete="username" required>
+    <label for="password">Senha</label>
+    <input id="password" type="password" autocomplete="current-password" required>
+    <button type="submit">Entrar</button>
+  </form>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorEl = document.getElementById('login-error');
+      errorEl.style.display = 'none';
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          errorEl.textContent = data.error || 'Usuário ou senha inválidos.';
+          errorEl.style.display = 'block';
+          return;
+        }
+        location.href = '/admin';
+      } catch (err) {
+        errorEl.textContent = 'Erro ao conectar. Tente novamente.';
+        errorEl.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

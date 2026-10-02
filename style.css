@@ -99,6 +99,9 @@
 
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 
+  .card-link{display:block;cursor:pointer;transition:transform .15s,box-shadow .15s}
+  .card-link:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(11,58,44,0.12)}
+
   /* LAUNCH CARD */
   .launch-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;overflow:hidden}
   .launch-card .photo{
@@ -238,4 +241,51 @@
   @media(max-width:600px){
     #ai-panel{right:12px;left:12px;width:auto}
     #ai-toggle{right:16px;bottom:16px}
+  }
+
+  /* PÁGINA DE DETALHES DO IMÓVEL */
+  .back-link{display:inline-block;margin:20px 0 0;color:var(--green-dark);font-weight:600;font-size:0.88rem}
+  .back-link:hover{color:var(--gold-dark)}
+
+  .carousel{position:relative;aspect-ratio:16/9;border-radius:4px;overflow:hidden;background:var(--bg);margin-top:16px}
+  .carousel .slide{
+    width:100%;height:100%;background-size:cover;background-position:center;
+  }
+  .carousel .slide.placeholder{background:linear-gradient(160deg,#DCE1D6,#93A98F 60%,#5E7457)}
+  .carousel-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;
+    background:rgba(255,255,255,0.9);border:none;cursor:pointer;font-size:1.1rem;color:var(--green-dark);
+  }
+  .carousel-arrow:hover{background:#fff}
+  .carousel-arrow.prev{left:14px}
+  .carousel-arrow.next{right:14px}
+  .carousel-counter{
+    position:absolute;bottom:14px;right:14px;background:rgba(11,58,44,0.75);color:#fff;
+    font-size:0.76rem;padding:4px 10px;border-radius:999px;
+  }
+  .carousel-dots{position:absolute;bottom:14px;left:14px;display:flex;gap:6px}
+  .carousel-dots .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.6);cursor:pointer}
+  .carousel-dots .dot.active{background:#fff}
+
+  .detail-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:36px;margin-top:28px;align-items:start}
+  .detail-main h1{font-size:1.6rem;color:var(--green-dark);font-weight:700}
+  .detail-main .loc{color:var(--muted);margin-top:6px;font-size:0.95rem}
+  .detail-main p.desc{margin-top:18px;line-height:1.7;color:#3E453F}
+  .detail-specs{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px}
+  .detail-specs div{background:var(--bg);border-radius:4px;padding:14px;text-align:center}
+  .detail-specs b{display:block;font-size:1.1rem;color:var(--green-dark)}
+  .detail-specs span{font-size:0.78rem;color:var(--muted)}
+
+  .detail-side{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:22px;position:sticky;top:90px}
+  .detail-side .price{font-size:1.5rem;font-weight:700;color:var(--green-dark)}
+  .detail-side .price .old{display:block;font-size:0.9rem;font-weight:400;text-decoration:line-through;color:var(--muted)}
+  .detail-side a.whatsapp-btn{
+    display:block;text-align:center;margin-top:16px;background:var(--green-dark);color:#fff;
+    padding:13px;border-radius:4px;font-weight:700;font-size:0.92rem;
+  }
+  .detail-side a.whatsapp-btn:hover{background:var(--green-mid)}
+
+  @media(max-width:860px){
+    .detail-grid{grid-template-columns:1fr}
+    .detail-side{position:static}
   }

@@ -78,6 +78,8 @@ app.get('/grupo-orlando-neto.html', (_req, res) => res.sendFile(resolve(projectR
 app.get('/style.css', (_req, res) => res.sendFile(resolve(projectRoot, 'style.css')));
 app.get('/20250805_105655.png', (_req, res) => res.sendFile(resolve(projectRoot, '20250805_105655.png')));
 app.get('/login', (_req, res) => res.sendFile(resolve(projectRoot, 'login.html')));
+app.get('/regiao.html', (_req, res) => res.sendFile(resolve(projectRoot, 'regiao.html')));
+app.get('/imovel.html', (_req, res) => res.sendFile(resolve(projectRoot, 'imovel.html')));
 
 // ===== Login / logout =====
 app.post('/api/admin/login', (req, res) => {
@@ -98,15 +100,30 @@ app.get('/admin', requireAdminPage, (_req, res) => res.sendFile(resolve(projectR
 app.use('/api/admin', requireAdminApi); // tudo abaixo desta linha em /api/admin/* exige login
 
 // ===== Imóveis: leitura pública (usada pelo site e pelo admin) =====
-app.get('/api/listings', async (_req, res) => {
-  const { data, error } = await supabase
-    .from('listings')
-    .select('*')
-    .order('created_at', { ascending: false });
+app.get('/api/listings', async (req, res) => {
+  let query = supabase.from('listings').select('*').order('created_at', { ascending: false });
+  if (req.query.region) {
+    query = query.eq('region', req.query.region);
+  }
+  const { data, error } = await query;
 
   if (error) {
     console.error('Erro ao buscar imóveis:', error);
     return res.status(500).json({ error: 'Erro ao buscar imóveis.' });
+  }
+  res.json(data);
+});
+
+app.get('/api/listings/:id', async (req, res) => {
+  const { data, error } = await supabase
+    .from('listings')
+    .select('*')
+    .eq('id', req.params.id)
+    .single();
+
+  if (error) {
+    console.error('Erro ao buscar imóvel:', error);
+    return res.status(404).json({ error: 'Imóvel não encontrado.' });
   }
   res.json(data);
 });

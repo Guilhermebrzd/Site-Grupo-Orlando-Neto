@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Imóvel — Grupo Orlando Neto Imóveis</title>
+<link rel="icon" type="image/png" href="/20250805_105655.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="#">Área do Cliente</a>
+    <a href="#">(83) 9986-7000</a>
+  </div>
+</div>
+
+<header class="mainnav">
+  <div class="wrap">
+    <a class="logo" href="/" style="display:flex;align-items:center;gap:12px">
+      <img class="logo-mark" src="/20250805_105655.png" alt="Logo Grupo Orlando Neto">
+      <div class="logo-text">
+        <div class="l1">Grupo Orlando Neto</div>
+        <div class="l2">Imóveis</div>
+      </div>
+    </a>
+    <ul class="navlinks">
+      <li><a href="/#alugar">ALUGAR</a></li>
+      <li><a href="/#imoveis">IMÓVEIS</a></li>
+      <li><a href="regiao.html?r=zona-sul">ZONA SUL</a></li>
+      <li><a href="regiao.html?r=bananeiras">BANANEIRAS</a></li>
+    </ul>
+    <div class="burger" id="burger" role="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<div class="wrap" id="content-wrap">
+  <a class="back-link" href="/">← Voltar para os imóveis</a>
+
+  <div id="loading" style="padding:60px 0;text-align:center;color:var(--muted)">Carregando imóvel...</div>
+  <div id="not-found" style="display:none;padding:60px 0;text-align:center;color:var(--muted)">Imóvel não encontrado. <a href="/">Voltar</a></div>
+
+  <div id="detail" style="display:none;padding-bottom:60px">
+    <div class="carousel">
+      <div class="slide" id="carousel-img"></div>
+      <button class="carousel-arrow prev" id="carousel-prev" aria-label="Foto anterior">‹</button>
+      <button class="carousel-arrow next" id="carousel-next" aria-label="Próxima foto">›</button>
+      <span class="carousel-counter" id="carousel-counter"></span>
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-main">
+        <h1 id="d-title"></h1>
+        <div class="loc" id="d-loc"></div>
+        <p class="desc" id="d-desc"></p>
+        <div class="detail-specs" id="d-specs"></div>
+      </div>
+      <div class="detail-side">
+        <div class="price" id="d-price"></div>
+        <a class="whatsapp-btn" id="d-whatsapp" target="_blank" rel="noopener">Falar com um corretor</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Grupo Orlando Neto Imóveis — CRECI-PB</span>
+    <span>João Pessoa, Paraíba</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const burger = document.getElementById('burger');
+  const navlinks = document.querySelector('.navlinks');
+  burger.addEventListener('click', () => {
+    const isOpen = navlinks.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+  });
+})();
+
+(function(){
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function money(v){ return (v===null||v===undefined||v==='') ? '' : Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+
+  function buildCarousel(photos){
+    if (!photos.length) photos = [null];
+    let idx = 0;
+    const imgEl = document.getElementById('carousel-img');
+    const counterEl = document.getElementById('carousel-counter');
+    const dotsEl = document.getElementById('carousel-dots');
+
+    function render(){
+      if (photos[idx]) {
+        imgEl.style.backgroundImage = `url('${photos[idx]}')`;
+        imgEl.classList.remove('placeholder');
+      } else {
+        imgEl.style.backgroundImage = '';
+        imgEl.classList.add('placeholder');
+      }
+      counterEl.textContent = (idx + 1) + ' / ' + photos.length;
+      counterEl.style.display = photos.length > 1 ? 'block' : 'none';
+      dotsEl.style.display = photos.length > 1 ? 'flex' : 'none';
+      dotsEl.innerHTML = photos.map((_, i) => `<span class="dot ${i === idx ? 'active' : ''}" data-i="${i}"></span>`).join('');
+    }
+
+    document.getElementById('carousel-prev').onclick = () => { idx = (idx - 1 + photos.length) % photos.length; render(); };
+    document.getElementById('carousel-next').onclick = () => { idx = (idx + 1) % photos.length; render(); };
+    dotsEl.onclick = (e) => {
+      if (e.target.classList.contains('dot')) { idx = Number(e.target.dataset.i); render(); }
+    };
+    render();
+  }
+
+  function render(item){
+    document.getElementById('d-title').textContent = item.title || '';
+    document.getElementById('d-loc').textContent = '📍 ' + (item.location || '');
+    document.getElementById('d-desc').textContent = item.description || '';
+
+    const priceEl = document.getElementById('d-price');
+    if (item.old_price) {
+      priceEl.innerHTML = `<span class="old">${money(item.old_price)}</span>${esc(item.operation || '')} ${money(item.price)}`;
+    } else {
+      priceEl.textContent = `${item.operation || ''} ${money(item.price)}`.trim();
+    }
+
+    const specs = Array.isArray(item.specs) ? item.specs : [];
+    document.getElementById('d-specs').innerHTML = specs.map(s => `
+      <div><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>
+    `).join('');
+
+    const waText = encodeURIComponent(`Olá! Tenho interesse no imóvel "${item.title}" (${item.location}).`);
+    document.getElementById('d-whatsapp').href = `https://wa.me/5583990004545?text=${waText}`;
+
+    const photos = Array.isArray(item.photos) && item.photos.length
+      ? item.photos
+      : (item.photo_url ? [item.photo_url] : []);
+    buildCarousel(photos);
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('detail').style.display = 'block';
+  }
+
+  async function load(){
+    const id = new URLSearchParams(location.search).get('id');
+    if (!id) { showNotFound(); return; }
+    try {
+      const res = await fetch('/api/listings/' + encodeURIComponent(id));
+      if (!res.ok) { showNotFound(); return; }
+      const item = await res.json();
+      render(item);
+    } catch (err) {
+      showNotFound();
+    }
+  }
+
+  function showNotFound(){
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('not-found').style.display = 'block';
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

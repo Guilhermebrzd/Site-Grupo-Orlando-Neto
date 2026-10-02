@@ -38,6 +38,8 @@
       <li><a href="#anunciar">ANUNCIE SEU IMÓVEL <span class="car">▾</span></a></li>
       <li><a href="#avaliar">AVALIE SEU IMÓVEL <span class="car">▾</span></a></li>
       <li><a href="#imobiliaria">IMOBILIÁRIA <span class="car">▾</span></a></li>
+      <li><a href="regiao.html?r=zona-sul">ZONA SUL</a></li>
+      <li><a href="regiao.html?r=bananeiras">BANANEIRAS</a></li>
     </ul>
     <div class="burger" id="burger" role="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></div>
   </div>
@@ -136,7 +138,7 @@
       ? `background-image:url('${esc(item.photo_url)}');background-size:cover;background-position:center`
       : `background:linear-gradient(160deg,#C7D6CE,#71958A 60%,#3B584F)`;
     return `
-      <div class="launch-card">
+      <a class="launch-card card-link" href="imovel.html?id=${esc(item.id)}">
         <div class="photo" style="${photo}"><span class="tag">${esc(item.badge || 'Lançamento')}</span></div>
         <div class="foot">${esc(item.building_type || '')}</div>
         <div class="info">
@@ -144,7 +146,7 @@
           <div class="loc">${esc(item.location)}</div>
           <p>${esc(item.description || '')}</p>
         </div>
-      </div>`;
+      </a>`;
   }
 
   function renderListingCard(item){
@@ -158,7 +160,7 @@
     const specs = Array.isArray(item.specs) ? item.specs : [];
     const specsHtml = specs.map(s => `<div><b>${esc(s.value)}</b>${esc(s.label)}</div>`).join('');
     return `
-      <div class="listing-card">
+      <a class="listing-card card-link" href="imovel.html?id=${esc(item.id)}">
         <div class="photo" style="${photo}">
           <span class="code">${code}</span>
           <span class="icons"><span>♡</span></span>
@@ -170,7 +172,7 @@
           <p>${esc(item.description || '')}</p>
           ${specs.length ? `<div class="specs">${specsHtml}</div>` : ''}
         </div>
-      </div>`;
+      </a>`;
   }
 
   function renderGroup(containerId, items, renderFn){

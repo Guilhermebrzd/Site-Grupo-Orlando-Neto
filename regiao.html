@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title id="page-title">Imóveis — Grupo Orlando Neto Imóveis</title>
+<link rel="icon" type="image/png" href="/20250805_105655.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="#">Área do Cliente</a>
+    <a href="#">(83) 9986-7000</a>
+  </div>
+</div>
+
+<header class="mainnav">
+  <div class="wrap">
+    <a class="logo" href="/" style="display:flex;align-items:center;gap:12px">
+      <img class="logo-mark" src="/20250805_105655.png" alt="Logo Grupo Orlando Neto">
+      <div class="logo-text">
+        <div class="l1">Grupo Orlando Neto</div>
+        <div class="l2">Imóveis</div>
+      </div>
+    </a>
+    <ul class="navlinks">
+      <li><a href="/#alugar">ALUGAR</a></li>
+      <li><a href="/#imoveis">IMÓVEIS</a></li>
+      <li><a href="regiao.html?r=zona-sul">ZONA SUL</a></li>
+      <li><a href="regiao.html?r=bananeiras">BANANEIRAS</a></li>
+    </ul>
+    <div class="burger" id="burger" role="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1 id="hero-title">Imóveis</h1>
+    <p style="margin-top:12px;color:#DCEAE3;max-width:60ch" id="hero-subtitle"></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="grid3" id="grid-regiao">
+      <p style="color:var(--muted);grid-column:1/-1;text-align:center">Carregando...</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Grupo Orlando Neto Imóveis — CRECI-PB</span>
+    <span>João Pessoa, Paraíba</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const burger = document.getElementById('burger');
+  const navlinks = document.querySelector('.navlinks');
+  burger.addEventListener('click', () => {
+    const isOpen = navlinks.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+  });
+})();
+
+(function(){
+  const REGIONS = {
+    'zona-sul': {
+      title: 'Imóveis na Zona Sul',
+      subtitle: 'Apartamentos e casas selecionados na Zona Sul de João Pessoa, para morar ou investir.'
+    },
+    'bananeiras': {
+      title: 'Imóveis em Bananeiras',
+      subtitle: 'Sítios, casas de campo e imóveis na Serra da Borborema, no charmoso município de Bananeiras.'
+    }
+  };
+
+  const r = new URLSearchParams(location.search).get('r') || 'zona-sul';
+  const info = REGIONS[r] || { title: 'Imóveis', subtitle: '' };
+  document.getElementById('page-title').textContent = info.title + ' — Grupo Orlando Neto Imóveis';
+  document.getElementById('hero-title').textContent = info.title;
+  document.getElementById('hero-subtitle').textContent = info.subtitle;
+
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function money(v){ return (v===null||v===undefined||v==='') ? '' : Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+
+  function renderCard(item){
+    const photo = item.photo_url
+      ? `background-image:url('${esc(item.photo_url)}');background-size:cover;background-position:center`
+      : `background:linear-gradient(160deg,#DCE1D6,#93A98F 60%,#5E7457)`;
+
+    if (item.category === 'lancamento') {
+      return `
+        <a class="launch-card card-link" href="imovel.html?id=${esc(item.id)}">
+          <div class="photo" style="${photo}"><span class="tag">${esc(item.badge || 'Lançamento')}</span></div>
+          <div class="foot">${esc(item.building_type || '')}</div>
+          <div class="info">
+            <h3>${esc(item.title)}</h3>
+            <div class="loc">${esc(item.location)}</div>
+            <p>${esc(item.description || '')}</p>
+          </div>
+        </a>`;
+    }
+
+    const code = 'Cód. ' + (item.id || '').slice(0, 4).toUpperCase();
+    const priceLine = item.old_price
+      ? `<span class="old">${money(item.old_price)}</span>${esc(item.operation || '')} ${money(item.price)}`
+      : `${esc(item.operation || '')} ${money(item.price)}`;
+    const specs = Array.isArray(item.specs) ? item.specs : [];
+    const specsHtml = specs.map(s => `<div><b>${esc(s.value)}</b>${esc(s.label)}</div>`).join('');
+    return `
+      <a class="listing-card card-link" href="imovel.html?id=${esc(item.id)}">
+        <div class="photo" style="${photo}">
+          <span class="code">${code}</span>
+          <span class="icons"><span>♡</span></span>
+        </div>
+        <div class="price-bar">${priceLine}</div>
+        <div class="info">
+          <h3>${esc(item.title)}</h3>
+          <div class="loc">📍 ${esc(item.location)}</div>
+          <p>${esc(item.description || '')}</p>
+          ${specs.length ? `<div class="specs">${specsHtml}</div>` : ''}
+        </div>
+      </a>`;
+  }
+
+  async function load(){
+    try {
+      const res = await fetch('/api/listings?region=' + encodeURIComponent(r));
+      const items = await res.json();
+      const el = document.getElementById('grid-regiao');
+      el.innerHTML = items.length
+        ? items.map(renderCard).join('')
+        : '<p style="color:var(--muted);grid-column:1/-1;text-align:center">Nenhum imóvel cadastrado nesta região ainda.</p>';
+    } catch (err) {
+      console.error('Erro ao carregar imóveis da região:', err);
+    }
+  }
+
+  load();
+})();
+</script>
+</body>
+</html>

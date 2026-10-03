@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import multer from 'multer';
+import sharp from 'sharp';
 import crypto from 'node:crypto';
 import { GoogleGenAI } from '@google/genai';
 import { createClient } from '@supabase/supabase-js';
@@ -72,14 +73,50 @@ function requireAdminApi(req, res, next) {
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 
+// ===== Marca d'água aplicada em toda foto enviada pelo painel =====
+const logoPath = resolve(projectRoot, '20250805_105655.png');
+
+async function applyWatermark(inputBuffer) {
+  const base = sharp(inputBuffer).rotate(); // corrige rotação de fotos de celular
+  const meta = await base.metadata();
+  const width = meta.width || 1200;
+  const height = meta.height || 800;
+
+  const wmWidth = Math.max(80, Math.round(width * 0.4));
+  const logoMeta = await sharp(logoPath).metadata();
+  const wmHeight = Math.round(wmWidth * (logoMeta.height / logoMeta.width));
+
+  // Reduz bastante a opacidade da logo (fica quase transparente sobre a foto)
+  const { data, info } = await sharp(logoPath)
+    .resize(wmWidth, wmHeight)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  for (let i = 3; i < data.length; i += 4) {
+    data[i] = Math.round(data[i] * 0.2);
+  }
+
+  const watermarkBuffer = await sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } })
+    .png()
+    .toBuffer();
+
+  return base
+    .composite([{
+      input: watermarkBuffer,
+      left: Math.max(0, Math.round((width - wmWidth) / 2)),
+      top: Math.max(0, Math.round((height - wmHeight) / 2))
+    }])
+    .jpeg({ quality: 85 })
+    .toBuffer();
+}
+
 // ===== Páginas e arquivos públicos =====
 app.get('/', (_req, res) => res.sendFile(resolve(projectRoot, 'grupo-orlando-neto.html')));
 app.get('/grupo-orlando-neto.html', (_req, res) => res.sendFile(resolve(projectRoot, 'grupo-orlando-neto.html')));
 app.get('/style.css', (_req, res) => res.sendFile(resolve(projectRoot, 'style.css')));
 app.get('/20250805_105655.png', (_req, res) => res.sendFile(resolve(projectRoot, '20250805_105655.png')));
 app.get('/login', (_req, res) => res.sendFile(resolve(projectRoot, 'login.html')));
-app.get('/regiao.html', (_req, res) => res.sendFile(resolve(projectRoot, 'regiao.html')));
-app.get('/imovel.html', (_req, res) => res.sendFile(resolve(projectRoot, 'imovel.html')));
 
 // ===== Login / logout =====
 app.post('/api/admin/login', (req, res) => {
@@ -100,30 +137,15 @@ app.get('/admin', requireAdminPage, (_req, res) => res.sendFile(resolve(projectR
 app.use('/api/admin', requireAdminApi); // tudo abaixo desta linha em /api/admin/* exige login
 
 // ===== Imóveis: leitura pública (usada pelo site e pelo admin) =====
-app.get('/api/listings', async (req, res) => {
-  let query = supabase.from('listings').select('*').order('created_at', { ascending: false });
-  if (req.query.region) {
-    query = query.eq('region', req.query.region);
-  }
-  const { data, error } = await query;
+app.get('/api/listings', async (_req, res) => {
+  const { data, error } = await supabase
+    .from('listings')
+    .select('*')
+    .order('created_at', { ascending: false });
 
   if (error) {
     console.error('Erro ao buscar imóveis:', error);
     return res.status(500).json({ error: 'Erro ao buscar imóveis.' });
-  }
-  res.json(data);
-});
-
-app.get('/api/listings/:id', async (req, res) => {
-  const { data, error } = await supabase
-    .from('listings')
-    .select('*')
-    .eq('id', req.params.id)
-    .single();
-
-  if (error) {
-    console.error('Erro ao buscar imóvel:', error);
-    return res.status(404).json({ error: 'Imóvel não encontrado.' });
   }
   res.json(data);
 });
@@ -168,12 +190,19 @@ app.post('/api/admin/upload', upload.single('photo'), async (req, res) => {
     return res.status(400).json({ error: 'Nenhum arquivo enviado.' });
   }
 
-  const ext = (req.file.originalname.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
-  const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  let watermarked;
+  try {
+    watermarked = await applyWatermark(req.file.buffer);
+  } catch (err) {
+    console.error('Erro ao aplicar marca d\'água:', err);
+    return res.status(500).json({ error: 'Erro ao processar a imagem.' });
+  }
+
+  const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
 
   const { error: uploadError } = await supabase.storage
     .from(PHOTOS_BUCKET)
-    .upload(filename, req.file.buffer, { contentType: req.file.mimetype, upsert: false });
+    .upload(filename, watermarked, { contentType: 'image/jpeg', upsert: false });
 
   if (uploadError) {
     console.error('Erro ao enviar foto:', uploadError);

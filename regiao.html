@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title id="page-title">Imóveis — Grupo Orlando Neto Imóveis</title>
+<script>
+  (function(){
+    var r = new URLSearchParams(location.search).get('r') || 'zona-sul';
+    if (r === 'zona-sul' || r === 'bananeiras') document.documentElement.classList.add('theme-' + r);
+  })();
+</script>
 <link rel="icon" type="image/png" href="/20250805_105655.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +47,7 @@
 <section class="hero">
   <div class="wrap">
     <h1 id="hero-title">Imóveis</h1>
-    <p style="margin-top:12px;color:#DCEAE3;max-width:60ch" id="hero-subtitle"></p>
+    <p style="margin-top:12px;color:var(--on-dark);max-width:60ch" id="hero-subtitle"></p>
   </div>
 </section>
 
@@ -98,7 +104,7 @@
 
     if (item.category === 'lancamento') {
       return `
-        <a class="launch-card card-link" href="imovel.html?id=${esc(item.id)}">
+        <a class="launch-card card-link" href="imovel.html?id=${esc(item.id)}&r=${esc(item.region || 'joao-pessoa')}">
           <div class="photo" style="${photo}"><span class="tag">${esc(item.badge || 'Lançamento')}</span></div>
           <div class="foot">${esc(item.building_type || '')}</div>
           <div class="info">
@@ -116,7 +122,7 @@
     const specs = Array.isArray(item.specs) ? item.specs : [];
     const specsHtml = specs.map(s => `<div><b>${esc(s.value)}</b>${esc(s.label)}</div>`).join('');
     return `
-      <a class="listing-card card-link" href="imovel.html?id=${esc(item.id)}">
+      <a class="listing-card card-link" href="imovel.html?id=${esc(item.id)}&r=${esc(item.region || 'joao-pessoa')}">
         <div class="photo" style="${photo}">
           <span class="code">${code}</span>
           <span class="icons"><span>♡</span></span>

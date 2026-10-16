@@ -138,7 +138,7 @@
       ? `background-image:url('${esc(item.photo_url)}');background-size:cover;background-position:center`
       : `background:linear-gradient(160deg,#C7D6CE,#71958A 60%,#3B584F)`;
     return `
-      <a class="launch-card card-link" href="imovel.html?id=${esc(item.id)}">
+      <a class="launch-card card-link" href="imovel.html?id=${esc(item.id)}&r=${esc(item.region || 'joao-pessoa')}">
         <div class="photo" style="${photo}"><span class="tag">${esc(item.badge || 'Lançamento')}</span></div>
         <div class="foot">${esc(item.building_type || '')}</div>
         <div class="info">
@@ -160,7 +160,7 @@
     const specs = Array.isArray(item.specs) ? item.specs : [];
     const specsHtml = specs.map(s => `<div><b>${esc(s.value)}</b>${esc(s.label)}</div>`).join('');
     return `
-      <a class="listing-card card-link" href="imovel.html?id=${esc(item.id)}">
+      <a class="listing-card card-link" href="imovel.html?id=${esc(item.id)}&r=${esc(item.region || 'joao-pessoa')}">
         <div class="photo" style="${photo}">
           <span class="code">${code}</span>
           <span class="icons"><span>♡</span></span>

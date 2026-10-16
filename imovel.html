@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Imóvel — Grupo Orlando Neto Imóveis</title>
+<script>
+  (function(){
+    var r = new URLSearchParams(location.search).get('r');
+    if (r === 'zona-sul' || r === 'bananeiras') document.documentElement.classList.add('theme-' + r);
+  })();
+</script>
 <link rel="icon" type="image/png" href="/20250805_105655.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +45,7 @@
 </header>
 
 <div class="wrap" id="content-wrap">
-  <a class="back-link" href="/">← Voltar para os imóveis</a>
+  <a class="back-link" id="back-link" href="/">← Voltar para os imóveis</a>
 
   <div id="loading" style="padding:60px 0;text-align:center;color:var(--muted)">Carregando imóvel...</div>
   <div id="not-found" style="display:none;padding:60px 0;text-align:center;color:var(--muted)">Imóvel não encontrado. <a href="/">Voltar</a></div>
@@ -118,7 +124,19 @@
     render();
   }
 
+  function applyRegionTheme(region){
+    const root = document.documentElement;
+    root.classList.remove('theme-zona-sul', 'theme-bananeiras');
+    const backLink = document.getElementById('back-link');
+    if (region === 'zona-sul' || region === 'bananeiras') {
+      root.classList.add('theme-' + region);
+      backLink.href = 'regiao.html?r=' + region;
+      backLink.textContent = region === 'zona-sul' ? '← Voltar para Zona Sul' : '← Voltar para Bananeiras';
+    }
+  }
+
   function render(item){
+    applyRegionTheme(item.region);
     document.getElementById('d-title').textContent = item.title || '';
     document.getElementById('d-loc').textContent = '📍 ' + (item.location || '');
     document.getElementById('d-desc').textContent = item.description || '';

@@ -94,6 +94,10 @@
   document.getElementById('hero-title').textContent = info.title;
   document.getElementById('hero-subtitle').textContent = info.subtitle;
 
+  document.querySelectorAll('.navlinks a').forEach(a => {
+    if (a.getAttribute('href') === 'regiao.html?r=' + r) a.classList.add('active');
+  });
+
   function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
   function money(v){ return (v===null||v===undefined||v==='') ? '' : Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
 
